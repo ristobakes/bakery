@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Risto Bakes</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --primary:#4b2e39;
+  --accent:#ff4d6d;
+  --gold:#d4af37;
+  --bg:#fff7fa;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  font-family:'Poppins',sans-serif;
+  background:var(--bg);
+}
+
+/* TOP BAR */
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  padding:10px 20px;
+  background:#fff;
+  font-size:13px;
+}
+
+/* HERO */
+.hero{
+  text-align:center;
+  padding:80px 20px;
+  background:linear-gradient(135deg,#4b2e39,#8c5c6e);
+  color:#fff;
+}
+
+.main-title{
+  font-family:'Playfair Display',serif;
+  font-size:48px;
+}
+
+.main-title span{color:#ffd6dc;}
+
+.hero-btn{
+  margin-top:20px;
+  padding:12px 28px;
+  border:none;
+  background:linear-gradient(45deg,#ff4d6d,#ff7a8a);
+  border-radius:30px;
+  color:#fff;
+  cursor:pointer;
+}
+
+/* GRID */
+.container{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:15px;
+  padding:15px;
+  max-width:1100px;
+  margin:auto;
+}
+
+/* SECTION */
+.section-title{
+  grid-column:1/-1;
+  text-align:center;
+  font-family:'Playfair Display',serif;
+  font-size:24px;
+  margin:25px 0;
+  color:var(--primary);
+}
+
+/* CARD */
+.card{
+  position:relative;
+  background:#fff;
+  border-radius:15px;
+  overflow:hidden;
+  cursor:pointer;
+  box-shadow:0 8px 20px rgba(0,0,0,.1);
+  transition:.3s;
+}
+
+.card:hover{transform:translateY(-6px) scale(1.04);}
+
+/* IMAGE */
+.img{
+  height:130px;
+  background-size:cover;
+  background-position:center;
+}
+
+/* BADGES */
+.veg{
+  position:absolute;
+  top:8px;
+  right:8px;
+  background:#fff;
+  border-radius:6px;
+  padding:2px 5px;
+  font-size:12px;
+  border:1px solid green;
+  color:green;
+  font-weight:bold;
+}
+
+.best{
+  position:absolute;
+  top:8px;
+  left:8px;
+  background:var(--gold);
+  color:#fff;
+  font-size:11px;
+  padding:4px 8px;
+  border-radius:20px;
+}
+
+.card h3{
+  padding:10px;
+  text-align:center;
+  font-size:14px;
+}
+
+/* ORDER PAGE */
+.order-page{
+  display:none;
+  max-width:420px;
+  margin:30px auto;
+  padding:25px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.7);
+  backdrop-filter:blur(15px);
+  box-shadow:0 20px 60px rgba(0,0,0,.2);
+}
+
+.order-page h2{
+  text-align:center;
+  margin-bottom:15px;
+  font-family:'Playfair Display';
+}
+
+input,textarea,select{
+  width:100%;
+  padding:12px;
+  margin:8px 0;
+  border-radius:10px;
+  border:1px solid #ddd;
+}
+
+#total{
+  text-align:center;
+  font-weight:bold;
+  margin:10px 0;
+}
+
+.btn-order{
+  width:100%;
+  background:#25D366;
+  padding:14px;
+  border:none;
+  border-radius:12px;
+  color:#fff;
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* PROMISE */
+.promise{
+  padding:40px;
+  text-align:center;
+}
+
+.promise h2{
+  font-family:'Playfair Display';
+  color:var(--primary);
+}
+
+.promise-box{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:15px;
+  margin-top:20px;
+}
+
+.promise-item{
+  background:#fff;
+  padding:15px;
+  border-radius:12px;
+}
+
+/* FOLLOW */
+.follow{
+  padding:30px;
+  text-align:center;
+  background:#4b2e39;
+  color:#fff;
+}
+
+.follow a{
+  display:inline-block;
+  margin:8px;
+  padding:10px 18px;
+  background:#ff4d6d;
+  border-radius:25px;
+  color:#fff;
+  text-decoration:none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <span>📞 +91 7796496296 / +91 9923309002</span>
+  <span>Eggless • Fresh • Premium</span>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <h1 class="main-title">Risto <span>Bakes</span></h1>
+  <p>🎂 Handcrafted Eggless Cakes</p>
+  <button onclick="scrollToMenu()" class="hero-btn">Explore Cakes</button>
+</div>
+
+<!-- CAKES -->
+<div id="home" class="container"></div>
+
+<!-- ORDER -->
+<div id="order" class="order-page">
+<h2 id="cakeName"></h2>
+
+<input id="userName" placeholder="Your Name">
+<input id="userPhone" placeholder="Phone">
+<textarea id="userAddress" placeholder="Address"></textarea>
+<input type="date" id="orderDate">
+
+<select id="weight" onchange="updatePrice()"></select>
+
+<textarea id="note" placeholder="Message on cake"></textarea>
+
+<div id="total">Select weight</div>
+
+<button class="btn-order" onclick="orderNow()">Order on WhatsApp</button>
+</div>
+
+<!-- PROMISE -->
+<div class="promise">
+<h2>Our Promise</h2>
+<div class="promise-box">
+<div class="promise-item">🎂 17 Flavours</div>
+<div class="promise-item">🔥 Freshly Baked</div>
+<div class="promise-item">🎨 Custom Designs</div>
+<div class="promise-item">😊 200+ Happy Customers</div>
+</div>
+</div>
+
+<!-- FOLLOW -->
+<div class="follow">
+<h2>Follow Us</h2>
+<a href="https://www.instagram.com/risto_bakes/">Instagram</a>
+<a href="https://youtube.com/@ristobakes">YouTube</a>
+</div>
+
+<script>
+
+// DATA
+const bestSellers=["Dark Chocolate","Pineapple","Black Forest","Chocolate Truffle","Rasmalai"];
+
+const cakes=[
+// CLASSIC (9)
+{name:"Dark Chocolate",img:"images/Dark-Choclate.jpg",prices:{0.5:300,1:600,1.5:900,2:1200},section:"classic"},
+{name:"Pineapple",img:"images/Pineapple.jpg",prices:{0.5:300,1:600,1.5:900,2:1200},section:"classic"},
+{name:"Black Forest",img:"images/Black-Forest.jpg",prices:{0.5:300,1:600,1.5:900,2:1200},section:"classic"},
+{name:"White Forest",img:"images/White-Forest.jpg",prices:{0.5:300,1:600,1.5:900,2:1200},section:"classic"},
+{name:"Strawberry",img:"images/Strawberry.jpg",prices:{0.5:300,1:600,1.5:900,2:1200},section:"classic"},
+{name:"Butterscotch",img:"images/butterscotch.jpg",prices:{0.5:300,1:600,1.5:900,2:1200},section:"classic"},
+{name:"Kulfi Falooda",img:"images/Kulfi-falooda.jpg",prices:{0.5:300,1:600,1.5:900,2:1200},section:"classic"},
+{name:"Gulab Gulkhand",img:"images/Gulab-gulkahand.jpg",prices:{0.5:300,1:600,1.5:900,2:1200},section:"classic"},
+{name:"Paan Shot",img:"images/paan.jpg",prices:{0.5:300,1:600,1.5:900,2:1200},section:"classic"},
+
+// SPECIAL (6)
+{name:"Chocolate Truffle",img:"images/Choclate-truffle.jpg",prices:{0.5:400,1:800,1.5:1200,2:1600},section:"special"},
+{name:"Rasmalai",img:"images/rasmalai.jpg",prices:{0.5:400,1:800,1.5:1200,2:1600},section:"special"},
+{name:"Chocolate Oreo",img:"images/oreo.jpg",prices:{0.5:350,1:700,1.5:1050,2:1400},section:"special"},
+{name:"Coffee",img:"images/coffee.jpg",prices:{0.5:350,1:700,1.5:1050,2:1400},section:"special"},
+{name:"American Icecream",img:"images/American-icecream.jpg",prices:{0.5:350,1:700,1.5:1050,2:1400},section:"special"},
+{name:"Red Velvet",img:"images/Red-velvet.jpg",prices:{0.5:400,1:800,1.5:1200,2:1600},section:"special"},
+
+// PREMIUM (2)
+{name:"Chocolate Almond",img:"images/choco-almond.jpg",prices:{0.5:450,1:900},section:"premium"},
+{name:"Chocolate Walnut",img:"images/walnut.jpg",prices:{0.5:450,1:900},section:"premium"}
+];
+
+const home=document.getElementById("home");
+let currentCake=null;
+
+// RENDER
+function render(){
+let sections=["classic","special","premium"];
+
+sections.forEach(sec=>{
+let title=document.createElement("div");
+title.className="section-title";
+title.innerText=sec.toUpperCase()+" CAKES";
+home.appendChild(title);
+
+cakes.filter(c=>c.section===sec).forEach(cake=>{
+let div=document.createElement("div");
+div.className="card";
+
+div.innerHTML=`
+<div class="img" style="background-image:url('${cake.img}')"></div>
+<div class="veg">🟢</div>
+${bestSellers.includes(cake.name)?'<div class="best">Best Seller</div>':''}
+<h3>${cake.name}</h3>
+`;
+
+div.onclick=()=>showOrder(cake);
+home.appendChild(div);
+});
+});
+}
+
+// SHOW ORDER
+function showOrder(cake){
+currentCake=cake;
+
+home.style.display="none";
+document.querySelector(".hero").style.display="none";
+document.querySelector(".promise").style.display="none";
+document.querySelector(".follow").style.display="none";
+
+order.style.display="block";
+
+cakeName.innerText=cake.name;
+
+weight.innerHTML="<option value=''>Select Weight</option>";
+for(let w in cake.prices){
+weight.innerHTML+=`<option value="${w}">${w} Kg</option>`;
+}
+}
+
+// PRICE
+function updatePrice(){
+let w=weight.value;
+if(!w){total.innerText="Select weight";return;}
+total.innerText="Total: ₹"+currentCake.prices[w];
+}
+
+// VALIDATION
+function orderNow(){
+let name=userName.value.trim();
+let phone=userPhone.value.trim();
+let address=userAddress.value.trim();
+let w=weight.value;
+
+if(name===""){alert("Enter name");return;}
+if(!/^[0-9]{10}$/.test(phone)){alert("Enter valid phone");return;}
+if(address===""){alert("Enter address");return;}
+if(!w){alert("Select weight");return;}
+
+let msg=`Cake: ${currentCake.name}
+Weight: ${w} Kg
+Name: ${name}
+Phone: ${phone}
+Address: ${address}`;
+
+window.open(`https://wa.me/917796496296?text=${encodeURIComponent(msg)}`);
+}
+
+// SCROLL
+function scrollToMenu(){
+document.getElementById("home").scrollIntoView({behavior:"smooth"});
+}
+
+render();
+
+</script>
+
+</body>
+</html>
